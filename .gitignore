@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+
+# generated data + warehouse (regenerate locally; never commit)
+include/landing/
+include/warehouse/
+
+# dbt artifacts
+include/dbt/target/
+include/dbt/logs/
+include/dbt/dbt_packages/
+
+# astro / airflow local
+.astro/
+airflow_settings.yaml
+.env
