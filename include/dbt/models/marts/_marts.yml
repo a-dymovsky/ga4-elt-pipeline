@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: fct_events
+    description: "One row per event, with foreign keys to sessions and traffic source."
+    columns:
+      - name: event_key
+        tests: [unique, not_null]
+      - name: session_key
+        tests: [not_null]
+      - name: traffic_source_key
+        tests:
+          - relationships:
+              to: ref('dim_traffic_source')
+              field: traffic_source_key
+
+  - name: fct_sessions
+    description: "One row per session, with attribution and conversion measures."
+    columns:
+      - name: session_key
+        tests: [unique, not_null]
+      - name: traffic_source_key
+        tests:
+          - relationships:
+              to: ref('dim_traffic_source')
+              field: traffic_source_key
+
+  - name: dim_traffic_source
+    description: "Distinct source / medium / campaign combinations with a channel grouping."
+    columns:
+      - name: traffic_source_key
+        tests: [unique, not_null]
