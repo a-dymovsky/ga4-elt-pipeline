@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: stg_events
+    description: "Cleaned, one-row-per-event view over raw.events."
+    columns:
+      - name: user_pseudo_id
+        tests: [not_null]
+      - name: ga_session_id
+        tests: [not_null]
+      - name: event_name
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['session_start', 'page_view', 'scroll', 'add_to_cart', 'begin_checkout', 'purchase']
