@@ -9,8 +9,8 @@ simulate traffic, backfills, and re-runs without touching a real warehouse.
 Idempotent by date: running twice for the same date overwrites that date's
 partition rather than appending, so re-runs are safe.
 """
-from __future__ import annotations
 
+from __future__ import annotations
 import argparse
 import json
 import os
@@ -18,11 +18,12 @@ import random
 import shutil
 from datetime import datetime, timezone
 from pathlib import Path
-
 import pandas as pd
 
 LANDING_DIR = os.environ.get("LANDING_DIR", "include/landing/events")
 
+# See "BigQuery Export Schema" at https://support.google.com/analytics/answer/7029846?hl=en
+# Events below are a very simplified version of the items denoted above.
 # (source, medium, campaign, weight) -- a made-up but plausible traffic mix.
 TRAFFIC_SOURCES = [
     ("google", "organic", "(not set)", 0.34),
