@@ -54,7 +54,6 @@ def _weighted_source():
 
 
 def generate(date: str, n_users: int = 800, seed: int | None = None) -> Path:
-    """Generate one date's worth of events and write the partition. Returns the dir."""
     # Date-derived seed so the same date reproduces identical data (idempotent
     # re-runs); pass --seed to vary it.
     random.seed(f"{date}-{seed}" if seed is not None else date)
@@ -89,7 +88,7 @@ def generate(date: str, n_users: int = 800, seed: int | None = None) -> Path:
 
             seconds = random.randint(0, 86_400 - 600)
             for event_name in event_names:
-                seconds += random.randint(2, 90)  # strictly increasing within a session
+                seconds += random.randint(2, 90)
                 page = random.choice(PAGES)
                 params = {
                     "page_location": f"https://shop.example.com{page}",
