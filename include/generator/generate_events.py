@@ -24,7 +24,9 @@ LANDING_DIR = os.environ.get("LANDING_DIR", "include/landing/events")
 
 # See "BigQuery Export Schema" at https://support.google.com/analytics/answer/7029846?hl=en
 # Events below are a very simplified version of the items denoted above.
-# (source, medium, campaign, weight) -- a made-up but plausible traffic mix.
+# (source, medium, campaign, weight): synthetic targets based off typical UTM comparables.
+# Weights are completely arbitrary.
+
 TRAFFIC_SOURCES = [
     ("google", "organic", "(not set)", 0.34),
     ("google", "cpc", "spring_sale", 0.18),
@@ -33,14 +35,19 @@ TRAFFIC_SOURCES = [
     ("facebook", "social", "brand_awareness", 0.09),
     ("bing", "organic", "(not set)", 0.07),
 ]
+
 PAGES = [
     "/", "/catalog", "/product/standing-desk", "/product/monitor-arm",
     "/cart", "/checkout", "/about", "/blog/wfh-setup",
 ]
+
 DEVICES = [
     ("desktop", "macOS", "Chrome"), ("mobile", "iOS", "Safari"),
     ("desktop", "Windows", "Edge"), ("mobile", "Android", "Chrome"),
 ]
+
+# Arbitrary countries.
+
 COUNTRIES = ["United States", "Canada", "United Kingdom", "Germany", "India"]
 
 
@@ -57,7 +64,7 @@ def generate(date: str, n_users: int = 800, seed: int | None = None) -> Path:
     # Date-derived seed so the same date reproduces identical data (idempotent
     # re-runs); pass --seed to vary it.
     random.seed(f"{date}-{seed}" if seed is not None else date)
-    day_start = datetime.fromisoformat(date).replace(tzinfo=timezone.utc).timestamp()
+    day_start = datetime.fromisoformat(date).replace(tzinfo = timezone.utc).timestamp()
 
     rows: list[dict] = []
     session_counter = 0
@@ -96,6 +103,7 @@ def generate(date: str, n_users: int = 800, seed: int | None = None) -> Path:
                     "ga_session_id": ga_session_id,
                     "session_engaged": is_engaged,
                 }
+
                 if event_name == "purchase":
                     params["value"] = round(random.uniform(29, 480), 2)
                     params["currency"] = "USD"
@@ -124,7 +132,7 @@ def generate(date: str, n_users: int = 800, seed: int | None = None) -> Path:
     if partition_dir.exists():
         shutil.rmtree(partition_dir)  # idempotent overwrite of this date only
     partition_dir.mkdir(parents=True)
-    # Drop event_date from the file -- it lives in the path (Hive partitioning).
+    # event_date dropped from file and lives in the path consistent with Hive partitioning.
     frame.drop(columns=["event_date"]).to_parquet(partition_dir / "part-0.parquet", index=False)
     print(f"[generate] {len(frame):>6} events -> {partition_dir}")
     return partition_dir
