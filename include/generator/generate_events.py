@@ -52,12 +52,9 @@ COUNTRIES = ["United States", "Canada", "United Kingdom", "Germany", "India"]
 
 
 def _weighted_source():
-    roll, cumulative = random.random(), 0.0
-    for source, medium, campaign, weight in TRAFFIC_SOURCES:
-        cumulative += weight
-        if roll <= cumulative:
-            return source, medium, campaign
-    return TRAFFIC_SOURCES[-1][:3]
+    choices = [row[:3] for row in TRAFFIC_SOURCES]
+    weights = [row[:3] for row in TRAFFIC_SOURCES]
+    return random.choices(choices, weights = weights)[0]
 
 
 def generate(date: str, n_users: int = 800, seed: int | None = None) -> Path:
