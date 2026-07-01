@@ -53,7 +53,7 @@ COUNTRIES = ["United States", "Canada", "United Kingdom", "Germany", "India"]
 
 def _weighted_source():
     choices = [row[:3] for row in TRAFFIC_SOURCES]
-    weights = [row[:3] for row in TRAFFIC_SOURCES]
+    weights = [row[3] for row in TRAFFIC_SOURCES]
     return random.choices(choices, weights = weights)[0]
 
 
