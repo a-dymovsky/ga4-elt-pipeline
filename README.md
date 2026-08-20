@@ -8,7 +8,7 @@ Runs free and locally on DuckDB.
 
 ## Quickstart
 
-Requires Python 3.12+. Runs entirely locally on DuckDB: no cloud accounts needed.
+Requires Python 3.12+. Runs locally on DuckDB: no cloud accounts needed.
 
 ```bash
 # 1. Clone and enter the project.
