@@ -31,6 +31,8 @@ and runs the dbt models with their tests. To see the result:
 just query
 ```
 
+Note: figures below scale with subsequent loads. A single `just build` generates a single day's worth of events.
+
 ```text
 channel_group    sessions   engaged   revenue
 organic search       1356      1118   44267.71
@@ -40,7 +42,7 @@ direct                730       606   19689.89
 
 ### Step 1: Generate Events
 
-```generate()``` produces one day's worth of synthetic GA4-shaped web-analytics events. Each run is reproducible and seeded by the date. Each "user" is captured with one or more sessions, with each session serving as a weighted-but-random sequence of events. Each session is stamped with a traffic source and every event with an increasing timestamp. Each event is assembled into a flat record with additional details packaged into a JSON ```event_params``` field to mirror GA4's BigQuery export. The full day's data is collected into a Pandas dataframe and written as Parquet into a date-partitioned folder (```event_date=YYYY-MM-DD/```) that is overwritten. Each date run replaces its data.
+`generate()` produces one day's worth of synthetic GA4-shaped web-analytics events. Each run is reproducible and seeded by the date. Each "user" is captured with one or more sessions, with each session serving as a weighted-but-random sequence of events. Each session is stamped with a traffic source and every event with an increasing timestamp. Each event is assembled into a flat record with additional details packaged into a JSON ```event_params``` field to mirror GA4's BigQuery export. The full day's data is collected into a Pandas dataframe and written as Parquet into a date-partitioned folder (```event_date=YYYY-MM-DD/```) that is overwritten. Each date run replaces its data.
 
 ### Proof
 
