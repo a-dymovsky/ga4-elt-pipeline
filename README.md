@@ -4,8 +4,6 @@ An end-to-end ELT pipeline for GA4-style web-analytics events.
 Proposed process: generate → land → load → transform (dbt) → orchestrate (Airflow).
 Runs free and locally on DuckDB.
 
-🚧 Work in progress.
-
 ## Quickstart
 
 Requires Python 3.12+. Runs locally on DuckDB: no cloud accounts needed.
