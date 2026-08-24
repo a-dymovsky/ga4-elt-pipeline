@@ -1,6 +1,6 @@
 # Pipeline Walkthrough
 
-A step-by-step walkthrough tour of the pipeline. Each section describes each functional area within the pipeline and provides instructions for local implementation, validation, and confirmation. Please see the [README](https://github.com/a-dymovsky/ga4-elt-pipeline/blob/main/README.md) for quickstart instructions.
+A step-by-step walkthrough of the pipeline. Each section describes each functional area within the pipeline and provides instructions for local implementation, validation, and confirmation. Please see the [README](https://github.com/a-dymovsky/ga4-elt-pipeline/blob/main/README.md) for quickstart instructions.
     
 ### Step 1: Generate Events
 
@@ -22,10 +22,7 @@ python include/generator/generate_events.py --date 2024-06-01
 Inspect the data as a CSV dump:
 
 ```bash
-python -c 
-"import pandas as pd; 
-pd.read_parquet
-('include/landing/events/event_date=2024-06-01/part-0.parquet').to_csv('sample_events.csv', index=False)"
+python -c "import pandas as pd; pd.read_parquet('include/landing/events/event_date=2024-06-01/part-0.parquet').to_csv('sample_events.csv', index=False)"
 ```
 
 Validate the seeding. Generate the same date twice and confirm each run is identical:
