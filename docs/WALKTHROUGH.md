@@ -37,7 +37,7 @@ python -c "import pandas as pd; a = pd.read_parquet('include/landing/events/even
 
 ### Step 2
 
-'load_partition()' copies a single date's Parquet yield into DuckDB as a 'raw.events' table. This represents the "extract" and "load" portions of this ELT project. Raw data is expressed in the JSON 'event_params' for dbt to handle downstream. The load is idempotent: any re-attempts or backfills never produce duplicates. Hive partitioning means 'event_date' is derived from the folder name rather than read from the file itself.
+`load_partition()` copies a single date's Parquet yield into DuckDB as a `raw.events` table. This represents the "extract" and "load" portions of this ELT project. Raw data is expressed in the JSON 'event_params' for dbt to handle downstream. The load is idempotent: any re-attempts or backfills never produce duplicates. Hive partitioning means 'event_date' is derived from the folder name rather than read from the file itself.
 
 ### Proof
 
