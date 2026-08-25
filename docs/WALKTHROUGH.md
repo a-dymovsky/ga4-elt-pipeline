@@ -34,4 +34,3 @@ python -c "import pandas as pd; a = pd.read_parquet('include/landing/events/even
 python include/generator/generate_events.py --date 2024-06-01
 python -c "import pandas as pd; a = pd.read_parquet('include/landing/events/event_date=2024-06-01/part-0.parquet'); print('run 2 rows:', len(a)); import hashlib; print('run 2 hash:', hashlib.md5(a.to_csv(index=False).encode()).hexdigest())"
 ```
-``
