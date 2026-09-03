@@ -177,3 +177,24 @@ print(con.sql('select event_name, page_title, event_value from main.stg_events l
 ```
 
 The JSON payload now appears in the form of legible, discernable columns.
+
+```bash
+python -c "
+import duckdb
+con = duckdb.connect('include/warehouse/wh.duckdb')
+print(con.sql('select session_key, source, medium, event_count, is_engaged, revenue from main.fct_sessions limit 5'))
+"
+```
+
+```text
+┌──────────────────────────────────┬────────────┬─────────┬─────────────┬────────────┬─────────┐
+│           session_key            │   source   │ medium  │ event_count │ is_engaged │ revenue │
+│             varchar              │  varchar   │ varchar │    int64    │   int64    │ double  │
+├──────────────────────────────────┼────────────┼─────────┼─────────────┼────────────┼─────────┤
+│ a2f2795bc13e55652e76a2f64277bed3 │ newsletter │ email   │           4 │          1 │     0.0 │
+│ 00fb2e68cfcc1d0e3296a0b5872e7a22 │ google     │ organic │           9 │          1 │     0.0 │
+│ 4219c1d20753e1662b1491167131ecfd │ (direct)   │ (none)  │           3 │          1 │     0.0 │
+│ e19082699dbc1af6eb7491e9762cab55 │ newsletter │ email   │           6 │          1 │     0.0 │
+│ 808511aee457037a76f0ac410ef48756 │ (direct)   │ (none)  │           6 │          1 │     0.0 │
+└──────────────────────────────────┴────────────┴─────────┴─────────────┴────────────┴─────────┘
+```
