@@ -128,3 +128,28 @@ just dbt
 [0m02:58:55  
 [0m02:58:55  Done. PASS=17 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=17
 ```
+
+Initial payload expresses raw events in standard, opaque JSON.
+
+```bash
+python -c "
+import duckdb
+con = duckdb.connect('include/warehouse/wh.db')
+print(con.sql('select event_name, event_params from raw.events limit 3'))
+```
+
+```text
+┌───────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  event_name   │                                             event_params                                             │
+│    varchar    │                                               varchar                                                │
+├───────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ session_start │ {"page_location": "https://shop.example.com/product/monitor-arm", "page_title": "product monitor-arm │
+│               │ ", "ga_session_id": 1717200001, "session_engaged": 0}                                                │
+├───────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ page_view     │ {"page_location": "https://shop.example.com/cart", "page_title": "cart", "ga_session_id": 1717200001 │
+│               │ , "session_engaged": 0}                                                                              │
+├───────────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ session_start │ {"page_location": "https://shop.example.com/blog/wfh-setup", "page_title": "blog wfh-setup", "ga_ses │
+│               │ sion_id": 1717200002, "session_engaged": 1}                                                          │
+└───────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
