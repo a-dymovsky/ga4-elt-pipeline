@@ -59,10 +59,27 @@ just generate 2024-06-01
 just load 2024-06-01
 ```
 
+```text
+[generate]   5759 events -> /home/personal/Documents/ga4-elt-pipeline/include/landing/events/event_date=2024-06-01
+```
+
+```text
+[load]   5759 rows for 2024-06-01 -> raw.events in /home/personal/Documents/ga4-elt-pipeline/include/warehouse/wh.duckdb 
+```
+
 Confirm the events landed as rows in the database:
 
 ```bash
 python -c "import duckdb; con = duckdb.connect('include/warehouse/wh.duckdb'); print(con.sql('select count(*) as total from raw.events'))"
+```
+
+```text
+┌───────┐
+│ total │
+│ int64 │
+├───────┤
+│  5759 │
+└───────┘
 ```
 
 Confirm idempotent returns by loading the same data twice. Confirm that the count does not double.
@@ -70,4 +87,15 @@ Confirm idempotent returns by loading the same data twice. Confirm that the coun
 ```bash
 just load 2024-06-01
 python -c "import duckdb; con = duckdb.connect('include/warehouse/wh.duckdb'); print(con.sql('select count(*) as total_after_reload from raw.events'))"
+```
+
+```text
+/home/personal/Documents/ga4-elt-pipeline/.venv/bin/python include/loader/load_to_duckdb.py --date 2024-06-01
+[load]   5759 rows for 2024-06-01 -> raw.events in /home/personal/Documents/ga4-elt-pipeline/include/warehouse/wh.duckdb
+┌────────────────────┐
+│ total_after_reload │
+│       int64        │
+├────────────────────┤
+│               5759 │
+└────────────────────┘
 ```
