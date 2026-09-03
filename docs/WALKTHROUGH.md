@@ -13,14 +13,14 @@ cd ~/ga4-elt-pipeline
 source .venv/bin/activate
 ```
 
-```text
-[generate]   5759 events -> include/landing/events/event_date=2024-06-01 
-```
-
 Generate a day's data:
 
 ```bash
 python include/generator/generate_events.py --date 2024-06-01
+```
+
+```text
+[generate]   5759 events -> include/landing/events/event_date=2024-06-01 
 ```
 
 Inspect the data as a CSV dump:
