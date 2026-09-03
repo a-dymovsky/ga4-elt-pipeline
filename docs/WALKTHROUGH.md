@@ -136,6 +136,7 @@ python -c "
 import duckdb
 con = duckdb.connect('include/warehouse/wh.db')
 print(con.sql('select event_name, event_params from raw.events limit 3'))
+"
 ```
 
 ```text
