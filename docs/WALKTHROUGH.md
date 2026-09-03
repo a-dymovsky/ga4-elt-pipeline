@@ -13,6 +13,10 @@ cd ~/ga4-elt-pipeline
 source .venv/bin/activate
 ```
 
+```text
+[generate]   5759 events -> include/landing/events/event_date=2024-06-01 
+```
+
 Generate a day's data:
 
 ```bash
@@ -33,6 +37,15 @@ python -c "import pandas as pd; a = pd.read_parquet('include/landing/events/even
 
 python include/generator/generate_events.py --date 2024-06-01
 python -c "import pandas as pd; a = pd.read_parquet('include/landing/events/event_date=2024-06-01/part-0.parquet'); print('run 2 rows:', len(a)); import hashlib; print('run 2 hash:', hashlib.md5(a.to_csv(index=False).encode()).hexdigest())"
+```
+
+```text
+[generate]   5759 events -> include/landing/events/event_date=2024-06-01 
+run 1 rows: 5759  
+run 1 hash: 32dd86bd1c73cedff5b0571bee0eb00c 
+[generate]   5759 events -> include/landing/events/event_date=2024-06-01  
+run 2 rows: 5759 
+run 2 hash: 32dd86bd1c73cedff5b0571bee0eb00c 
 ```
 
 ## Step 2: Extract and Load Events
