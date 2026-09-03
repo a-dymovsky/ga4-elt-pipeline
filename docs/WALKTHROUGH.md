@@ -48,6 +48,8 @@ run 2 rows: 5759
 run 2 hash: 32dd86bd1c73cedff5b0571bee0eb00c 
 ```
 
+Both runs produce the same hash. Event generation is provably deterministic. Any subsequent run, or potential backfill, produces identical data.
+
 ## Step 2: Extract and Load Events
 
 `load_partition()` copies a single date's Parquet yield into DuckDB as a `raw.events` table. This represents the "extract" and "load" portions of this ELT project. Raw data is expressed in the JSON 'event_params' for dbt to handle downstream. The load is idempotent: any re-attempts or backfills never produce duplicates. Hive partitioning means 'event_date' is derived from the folder name rather than read from the file itself.
@@ -99,3 +101,5 @@ python -c "import duckdb; con = duckdb.connect('include/warehouse/wh.duckdb'); p
 │               5759 │
 └────────────────────┘
 ```
+
+Event count remains unchanged. The loader deletes extant rows prior to inserting.
