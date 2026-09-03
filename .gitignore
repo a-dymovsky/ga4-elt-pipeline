@@ -15,3 +15,4 @@ include/dbt/dbt_packages/
 .astro/
 airflow_settings.yaml
 .env
+sample_events.csv

@@ -198,3 +198,6 @@ print(con.sql('select session_key, source, medium, event_count, is_engaged, reve
 │ 808511aee457037a76f0ac410ef48756 │ (direct)   │ (none)  │           6 │          1 │     0.0 │
 └──────────────────────────────────┴────────────┴─────────┴─────────────┴────────────┴─────────┘
 ```
+
+Each row is one session rather than one event. `event_count` shows how many events were collapsed into it. Each carries the traffic source that opened the session. Most sessions show zero revenue. Only converting sessions carry a value.
+
