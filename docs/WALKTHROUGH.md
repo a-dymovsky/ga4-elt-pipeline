@@ -154,3 +154,26 @@ print(con.sql('select event_name, event_params from raw.events limit 3'))
 │               │ sion_id": 1717200002, "session_engaged": 1}                                                          │
 └───────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+The same fields as typed columns in `stg_events`:
+
+```bash
+python -c "
+import duckdb
+con = duckdb.connect('include/warehouse/wh.duckdb')
+print(con.sql('select event_name, page_title, event_value from main.stg_events limit 3'))
+"
+```
+
+```text
+┌───────────────┬─────────────────────┬─────────────┐
+│  event_name   │     page_title      │ event_value │
+│    varchar    │       varchar       │   double    │
+├───────────────┼─────────────────────┼─────────────┤
+│ session_start │ product monitor-arm │        NULL │
+│ page_view     │ cart                │        NULL │
+│ session_start │ blog wfh-setup      │        NULL │
+└───────────────┴─────────────────────┴─────────────┘
+```
+
+The JSON payload now appears in the form of legible, discernable columns.
