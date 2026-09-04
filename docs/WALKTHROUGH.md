@@ -201,3 +201,17 @@ print(con.sql('select session_key, source, medium, event_count, is_engaged, reve
 
 Each row is one session rather than one event. `event_count` shows how many events were collapsed into it. Each carries the traffic source that opened the session. Most sessions show zero revenue. Only converting sessions carry a value.
 
+## Step 4: Orchestrate (Airflow)
+
+`dags/ga4_pipeline.py` runs the same three stages on a schedule: `generate_events → load → dbt_build`. The two Python tasks import the same modules the justfile calls, therefore the local run and the orchestrated run share one codebase. Airflow adds scheduling, retries, and a UI. Each run operates on its logical date. The idempotency of the generator and loader enable backfills and reattempts at any time. Airflow runs locally in Docker via the Astro CLI: the `ENV` lines in the `Dockerfile` point the tasks at the same DuckDB file inside the container.
+
+Initialize Airflow:
+
+```bash
+astro dev start
+```
+
+Navigate to your Airflow instance, specify the `ga4_pipeline` DAG, and trigger a run.
+
+![ga4_pipeline_DAG_run](/home/personal/Pictures/Screenshots/airflow_dag_ga4.png)
+
