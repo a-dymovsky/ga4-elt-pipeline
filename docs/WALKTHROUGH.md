@@ -213,5 +213,5 @@ astro dev start
 
 Navigate to your Airflow instance, specify the `ga4_pipeline` DAG, and trigger a run.
 
-![ga4_pipeline_DAG_run](/home/personal/Pictures/Screenshots/airflow_dag_ga4.png)
+![ga4_pipeline_DAG_run](airflow_dag_ga4.png)
 
