@@ -134,7 +134,7 @@ Initial payload expresses raw events in standard, opaque JSON.
 ```bash
 python -c "
 import duckdb
-con = duckdb.connect('include/warehouse/wh.db')
+con = duckdb.connect('include/warehouse/wh.duckdb')
 print(con.sql('select event_name, event_params from raw.events limit 3'))
 "
 ```
