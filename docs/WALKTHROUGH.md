@@ -215,3 +215,20 @@ Navigate to your Airflow instance, specify the `ga4_pipeline` DAG, and trigger a
 
 ![ga4_pipeline_DAG_run](airflow_dag_ga4.png)
 
+All three tasks complete in order. Each task is dependent on its predecessor. A failure at any stage stops the ones downstream rather than running them against missing data.
+
+### Proof
+
+The `dbt_build` task log shows the same model and test results as a local run:
+
+![ga4_pipeline_dbt_build_log](airflow_dbt_build_ga4.png)
+
+```bash
+astro dev bash
+python -c "
+import duckdb
+con = duckdb.connect('/usr/local/airflow/include/warehouse/wh.duckdb')
+print(con.sql('select table_schema, table_name from information_schema.tables order by 1,2'))
+"
+```
+
