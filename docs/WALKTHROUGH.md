@@ -232,3 +232,16 @@ print(con.sql('select table_schema, table_name from information_schema.tables or
 "
 ```
 
+```text
+┌──────────────┬────────────────────┐
+│ table_schema │     table_name     │
+│   varchar    │      varchar       │
+├──────────────┼────────────────────┤
+│ main         │ dim_traffic_source │
+│ main         │ fct_events         │
+│ main         │ fct_sessions       │
+│ main         │ stg_events         │
+│ raw          │ events             │
+└──────────────┴────────────────────┘
+```
+The same `raw.events` source and four dbt models exist inside the container. The pipeline behaves identically whether driven by `just` locally or by Airflow on a schedule.
